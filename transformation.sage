@@ -2,6 +2,9 @@ from itertools import product
 import subprocess
 
 def elim_square(FF, matrix_list, eliminator_index, index):
+    '''
+    Generalised Gaussian elimination for MQ systems of equations. It makes 0 the coefficient of the square monomial of index index, in all matrices starting from eliminator_index + 1
+    '''
     eliminator_index -= 1
     index -= 1
     T = identity_matrix(FF, len(matrix_list))
@@ -25,6 +28,9 @@ def elim_square(FF, matrix_list, eliminator_index, index):
     return T
 
 def fetch_constraints_first(FF, matrix_list, partition, guessed, col_index):
+    '''
+    Fetches the linear equations in the case of the first part b1 of the partition
+    '''
     col_index -= 1
     assert 0 < col_index and col_index < partition[0]
     n_vars = matrix_list[0].nrows()
@@ -34,6 +40,9 @@ def fetch_constraints_first(FF, matrix_list, partition, guessed, col_index):
     return constraints[1:]
 
 def fetch_constraints(FF, matrix_list, partition, guessed, p_index, col_index):
+    '''
+    Fetches the constraints in the case of intermediate parts bp_index of the partition (i.e. not b1 and bp)
+    '''
     p_index -= 1
     col_index -= 1
     assert 0 < p_index and p_index < len(partition) - 1
@@ -53,6 +62,9 @@ def fetch_constraints(FF, matrix_list, partition, guessed, p_index, col_index):
     return constraints[1:]
 
 def fetch_constraints_last(FF, matrix_list, partition, guessed, col_index):
+    '''
+    Fetches the constraints for the last part bp of the partition
+    '''
     col_index -= 1
     n_vars = matrix_list[0].nrows()
     constraints = Matrix(FF, zero_vector(FF, n_vars))
@@ -65,8 +77,10 @@ def fetch_constraints_last(FF, matrix_list, partition, guessed, col_index):
     return constraints[1:]
 
 def elim_above(FF, matrix_list, partition, guessed, p_index, col_index):
-    # Outputs the TRANSPOSED linear transformation on the domain
-    # Determine which algorithm to use, depending on the current block
+    '''
+    Eliminates the coefficients of mixed terms above the diagonal of the column col_index.
+    It returns the (transposed) desired change of variables in the domain of the MQ map.
+    '''
     if p_index == 1:
         constraints = fetch_constraints_first(FF, matrix_list, partition, guessed, col_index)
     elif p_index == len(partition):
@@ -101,6 +115,9 @@ def elim_above(FF, matrix_list, partition, guessed, p_index, col_index):
     return S
 
 def one_step(FF, matrix_list, partition, guessed, p_index, col_index):
+    '''
+    It returns a list of 2 elements: the 1st is the change of variables in the codomain after handling the column col_index, and the 2nd is the change of variables in the domain after handling the column col_index
+    '''
     if p_index == 1 and col_index == 1:
         return [elim_square(FF, matrix_list, guessed[0] + col_index, col_index), identity_matrix(FF, matrix_list[0].nrows())]
     elif p_index == 1:
@@ -115,8 +132,10 @@ def one_step(FF, matrix_list, partition, guessed, p_index, col_index):
         copy = [uptriag(S * M * S.transpose()) for M in matrix_list]
         return [elim_square(FF, copy, sum(guessed) + sum(partition[: p_index - 1]) + col_index, sum(partition[: p_index - 1]) + col_index), S]
 
-# Unfortunately I cant apply a linear transformation on the left to a list :( So I have to do it manually
 def linear_transformations(FF, matrix_list, partition, guessed):
+    '''
+    It returns a list of 3 elements: 1st is the full change of variables in the codomain, 2nd is the full change of variables in the domain and 3rd is the MQ system after the change of variables
+    '''
     assert sum(partition) + sum(guessed) == len(matrix_list)
     n = matrix_list[0].nrows()
     m = len(matrix_list)
