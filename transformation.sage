@@ -1,3 +1,6 @@
+from itertools import product
+import subprocess
+
 def elim_square(FF, matrix_list, eliminator_index, index):
     eliminator_index -= 1
     index -= 1
