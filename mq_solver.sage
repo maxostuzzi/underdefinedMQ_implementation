@@ -76,7 +76,6 @@ def matrix_to_input(R, matrix_list, guess, t):
     n_vars = matrix_list[0].nrows()
     m_eqs = len(matrix_list)
     generators = R.gens()
-    print(generators)
     variables = vector(generators + guess)
     # assert len(R.gens()) == m_eqs           # n equations == n variables
     eqs = [variables * M * variables for M in matrix_list]
@@ -188,21 +187,18 @@ def MQ_square_solver(FF, matrix_list, t, guess, hybrid_guess):
     MQ_input = matrix_to_input(R, matrix_list, guess, t)
     input_filename = 'input.in'
     for L in product([to_int(element) for element in list(FF)], repeat = hybrid_guess):
-        print(L)
         MQ_input_overdef = MQ_input
         for g in range(hybrid_guess):
             MQ_input_overdef = MQ_input_overdef + 'X' + str(g) + ' - ' + str(L[g])
         
         with open(input_filename, 'w') as file:
             file.write(MQ_input_overdef)
-            # print(f"Trying hybrid guess: {L}, writing input to {input_filename}")
 
         command = ['./solver.sh', '-f', str(field_size), '-n', str(n_vars), '-s', 'm4gb', input_filename]
         output_filename = 'output.txt'
         try:
             with open(output_filename, 'w') as output_file:
                 result = subprocess.run(command, stdout=output_file, stderr=subprocess.PIPE, text=True)
-                # result = subprocess.run(command, capture_output=True, text=True)
         except subprocess.CalledProcessError as e:
             print("Solver returned non-zero exit status (might be no solution for this guess).")
             print("Details:\n", e.stderr)
@@ -222,21 +218,21 @@ def MQ_square_solver(FF, matrix_list, t, guess, hybrid_guess):
 
 
 
-# char = 2
-# exp = 4
-# FF.<w> = GF(2^4)
-# n = 10
-# m = 7
+char = 2
+exp = 4
+FF.<w> = GF(2^4)
+n = 16
+m = 13
 
-# eqs = [uptriag(random_matrix(FF, n)) for i in range(m)]
-# target = [FF.random_element() for i in range(m)]
-# # target = [FF(w^3 + w), FF(w^3 + w), FF(w^2 + 1), FF(0), FF(w^3 + w^2 + w + 1), FF(w^2 + 1), FF(w^3), FF(w^3 + w^2), FF(w^3 + w + 1), FF(w^3 + w)]
+eqs = [uptriag(random_matrix(FF, n)) for i in range(m)]
+target = [FF.random_element() for i in range(m)]
+# target = [FF(w^3 + w), FF(w^3 + w), FF(w^2 + 1), FF(0), FF(w^3 + w^2 + w + 1), FF(w^2 + 1), FF(w^3), FF(w^3 + w^2), FF(w^3 + w + 1), FF(w^3 + w)]
 
-# tmp = MQ_square_solver(FF, eqs, target, (w^3 + w,w^2 + 1,w^3 + w + 1), 1)
-# if tmp is None:
-#     print("No sol")
-# else:
-#     sol = vector(tmp)
-#     print(sol)
-#     print([sol * eq * sol for eq in eqs])
-#     print(target)
+tmp = MQ_square_solver(FF, eqs, target, (w^3 + w,w^2 + 1,w^3 + w + 1), 1)
+if tmp is None:
+    print("No sol")
+else:
+    sol = vector(tmp)
+    print(sol)
+    print([sol * eq * sol for eq in eqs])
+    print(target)
