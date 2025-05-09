@@ -138,8 +138,11 @@ def process_output(FF, R, file: str):
                     try:
                         p[0]
                     except:
+                        print('---------------------------------------')
                         print(poly)
+                        print('---------------------------------------')
                         print(s)
+                        print('---------------------------------------')
                         print(p)
                         raise
                     if p.strip() == "":
@@ -211,13 +214,50 @@ def MQ_square_solver(FF, matrix_list, t, guess, hybrid_guess):
             continue
         if 'X' not in out:
             continue
-        print("Solution found!")
+        #print("Solution found!")
         return process_output(FF, R, output_filename) + guess
+    return None
+
+def MQ_overdefined_solver(FF, matrix_list, t, guess, hybrid_guess):
+    n_vars = matrix_list[0].nrows()
+    m_eqs = len(matrix_list)
+    field_size = FF.cardinality()
+    R = polyring(FF, n_vars - len(guess))
+
+    MQ_input = matrix_to_input(R, matrix_list, guess, t)
+    input_filename = 'input.in'
+    
+    for L in product([to_int(element) for element in list(FF)], repeat=hybrid_guess):
+        MQ_input_overdef = MQ_input
+        for g in range(hybrid_guess):
+            MQ_input_overdef = MQ_input_overdef + 'X' + str(g) + ' - ' + str(L[g])
+
+        with open(input_filename, 'w') as f:
+            f.write(MQ_input_overdef)
+
+        command = ['./solver.sh', '-f', str(field_size), '-n', str(n_vars), '-s', 'm4gb', input_filename]
+        output_filename = 'output.txt'
+        try:
+            with open(output_filename, 'w') as output_file:
+                subprocess.run(command, stdout=output_file, stderr=subprocess.PIPE, text=True)
+        except subprocess.CalledProcessError as e:
+            print("Solver returned non-zero exit status (might be no solution for this guess).")
+            print("Details:\n", e.stderr)
+            continue
+
+        with open(output_filename, 'r') as f:
+            out = f.read()
+
+        if "contradiction" in out or 'X' not in out:
+            continue
+
+        return process_output(FF, R, output_filename) + guess
+
     return None
 
 
 
-
+"""
 char = 2
 exp = 4
 FF.<w> = GF(2^4)
@@ -236,3 +276,4 @@ else:
     print(sol)
     print([sol * eq * sol for eq in eqs])
     print(target)
+"""
