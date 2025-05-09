@@ -144,7 +144,7 @@ def process_output(FF, R, file: str):
                         print(s)
                         print('---------------------------------------')
                         print(p)
-                        raise
+                        continue
                     if p.strip() == "":
                         continue
                     if 'X' == p[0]:
@@ -169,18 +169,14 @@ def MQ_square_solver(FF, matrix_list, t, guess, hybrid_guess):
     '''
     n_vars = matrix_list[0].nrows()
     m_eqs = len(matrix_list)
+    print(f'Square MQ problem with n = {m_eqs} variables')
     field_size = FF.cardinality()
     R = polyring(FF, m_eqs)
-    if n_vars - len(guess) < 3:
+    if m_eqs < 3:
         generators = R.gens()
         variables = vector(generators + guess)
-
-        # print(variables)
-        # assert len(R.gens()) == m_eqs           # n equations == n variables
         eqs = [variables * matrix_list[i] * variables - t[i] for i in range(len(matrix_list))]
-        # print(eqs)
         I = ideal(R, eqs)
-        # print(I)
         V = I.variety()
         if V == []:
             return None
@@ -193,7 +189,6 @@ def MQ_square_solver(FF, matrix_list, t, guess, hybrid_guess):
         MQ_input_overdef = MQ_input
         for g in range(hybrid_guess):
             MQ_input_overdef = MQ_input_overdef + 'X' + str(g) + ' - ' + str(L[g])
-        
         with open(input_filename, 'w') as file:
             file.write(MQ_input_overdef)
 
@@ -202,6 +197,7 @@ def MQ_square_solver(FF, matrix_list, t, guess, hybrid_guess):
         try:
             with open(output_filename, 'w') as output_file:
                 result = subprocess.run(command, stdout=output_file, stderr=subprocess.PIPE, text=True)
+
         except subprocess.CalledProcessError as e:
             print("Solver returned non-zero exit status (might be no solution for this guess).")
             print("Details:\n", e.stderr)
@@ -226,8 +222,10 @@ def MQ_overdefined_solver(FF, matrix_list, t, guess, hybrid_guess):
 
     MQ_input = matrix_to_input(R, matrix_list, guess, t)
     input_filename = 'input.in'
-    
+
     for L in product([to_int(element) for element in list(FF)], repeat=hybrid_guess):
+        print(L)
+
         MQ_input_overdef = MQ_input
         for g in range(hybrid_guess):
             MQ_input_overdef = MQ_input_overdef + 'X' + str(g) + ' - ' + str(L[g])
@@ -240,9 +238,11 @@ def MQ_overdefined_solver(FF, matrix_list, t, guess, hybrid_guess):
         try:
             with open(output_filename, 'w') as output_file:
                 subprocess.run(command, stdout=output_file, stderr=subprocess.PIPE, text=True)
+
         except subprocess.CalledProcessError as e:
             print("Solver returned non-zero exit status (might be no solution for this guess).")
             print("Details:\n", e.stderr)
+            raise
             continue
 
         with open(output_filename, 'r') as f:
@@ -250,30 +250,29 @@ def MQ_overdefined_solver(FF, matrix_list, t, guess, hybrid_guess):
 
         if "contradiction" in out or 'X' not in out:
             continue
-
+        print('here')
         return process_output(FF, R, output_filename) + guess
 
     return None
 
 
 
-"""
-char = 2
-exp = 4
-FF.<w> = GF(2^4)
-n = 16
-m = 13
 
-eqs = [uptriag(random_matrix(FF, n)) for i in range(m)]
-target = [FF.random_element() for i in range(m)]
-# target = [FF(w^3 + w), FF(w^3 + w), FF(w^2 + 1), FF(0), FF(w^3 + w^2 + w + 1), FF(w^2 + 1), FF(w^3), FF(w^3 + w^2), FF(w^3 + w + 1), FF(w^3 + w)]
+# char = 2
+# exp = 4
+# FF.<w> = GF(2^4)
+# n = 3
+# m = 3
 
-tmp = MQ_square_solver(FF, eqs, target, (w^3 + w,w^2 + 1,w^3 + w + 1), 1)
-if tmp is None:
-    print("No sol")
-else:
-    sol = vector(tmp)
-    print(sol)
-    print([sol * eq * sol for eq in eqs])
-    print(target)
-"""
+# eqs = [uptriag(random_matrix(FF, n)) for i in range(m)]
+# target = [FF.random_element() for i in range(m)]
+# # target = [FF(w^3 + w), FF(w^3 + w), FF(w^2 + 1), FF(0), FF(w^3 + w^2 + w + 1), FF(w^2 + 1), FF(w^3), FF(w^3 + w^2), FF(w^3 + w + 1), FF(w^3 + w)]
+
+# tmp = MQ_square_solver(FF, eqs, target, (), 1)
+# if tmp is None:
+#     print("No sol")
+# else:
+#     sol = vector(tmp)
+#     print(sol)
+#     print([sol * eq * sol for eq in eqs])
+#     print(target)

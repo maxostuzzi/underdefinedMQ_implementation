@@ -37,7 +37,7 @@ def last_variables(FF, matrix_list, partition, guessed):
     return last_vars
 
 
-def compute_x(FF, P, t, partition, k, q, omega = 2):
+def compute_x(FF, P, t, partition, k, q, omega = 3):
     """Computes x = (x_1, ... ,x_n)"""
     k_total = sum(k)
 
@@ -57,7 +57,7 @@ def compute_x(FF, P, t, partition, k, q, omega = 2):
 
     # Try to find a solution with some u otherwise select different u
     for u in product([element for element in list(FF)], repeat = sum(k)): # integer rep or field rep? ._integer_representation()
-        
+        print(u)
         vecorize_u = vector(FF, u)
 
         sol = vecorize_u.concatenate(vectorize_last)
@@ -67,8 +67,13 @@ def compute_x(FF, P, t, partition, k, q, omega = 2):
         for i in reversed(range(1, len(partition))):
             try:
                 print(f'Solving {i+1}-th block')
-                sol = MQ_square_solver(FF, [P[sum(partition[:i]): , sum(partition[:i]):] for P in P_tilde[k_total + sum(partition[:i]): k_total + sum(partition[:i+1])]], t_tilde[k_total + sum(partition[:i]):], tuple(sol), find_guess_hybrid(partition[i], q, omega))
-                print('here')
+                print(f'The Hybrid Guess is {find_guess_hybrid(partition[i], q, omega)}')
+                try:
+                    hybrid_guess = find_guess_hybrid(partition[i], q, omega)
+                except:
+                    hybrid_guess = partition[i]
+
+                sol = MQ_square_solver(FF, [P[sum(partition[:i]): , sum(partition[:i]):] for P in P_tilde[k_total + sum(partition[:i]): k_total + sum(partition[:i+1])]], t_tilde[k_total + sum(partition[:i]):], tuple(sol), 1)
                 if sol is None:
                     solved = False
                     print(f'Failed {i+1}-th block')
@@ -82,7 +87,7 @@ def compute_x(FF, P, t, partition, k, q, omega = 2):
                 break
         if not solved:
             continue
-        sol = MQ_overdefined_solver(FF, P_tilde[:(partition[0] + k_total)], t_tilde[:(partition[0] + k_total)], tuple(sol), 0)
+        sol = MQ_overdefined_solver(FF, P_tilde[:(partition[0] + k_total)], t_tilde[:(partition[0] + k_total)], tuple(sol), 1)
         if sol is None: 
             print(f'Failed at last block')
             continue
@@ -129,15 +134,14 @@ def compute_x(FF, P, t, partition, k, q, omega = 2):
 
 
 
-
-FF.<w> = GF(2^4)
-B = [2,2,2]
+q = 2^3
+FF.<w> = GF(q)
+B = [3,3,3]
 k1 = 1
 k2 = 1
 k = [k1, k2]
-n = 21
+n = 73
 m = sum(B) + sum(k) 
-q = 2^4
 omega = 3
 
 assert sum(B)+sum(k) == m, f'Error: the partition does not sum to {m}'
