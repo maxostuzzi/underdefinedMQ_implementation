@@ -13,6 +13,10 @@ Our filtering algorithm `filter_test.py` takes as input:
 
 It will check whether `guessed` and `partition` satisfy the constraints from the paper and it will print a detailed overview of what steps can be done and what steps cannot.
 
+An example:
+
+`python filter_test.py -n 1848 -m 142 -guessed 1 1 -partition 9 1 1 1 1 127`
+
 ***
 
 ## Transformation Algorithm
@@ -32,7 +36,7 @@ It will print all the matrices of the new MQ map $\tilde P = T\circ P\circ S$.
 
 An example:
 
-- `python ./transformation.sage -n 100 -m 14 -q 16 -partiton 4 4 4 -guessed 1 1`
+- `python ./transformation.sage -n 100 -m 14 -q 16 -guessed 1 1 -partiton 4 4 4`
   
 ***
 
