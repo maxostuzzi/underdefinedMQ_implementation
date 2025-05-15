@@ -1,5 +1,6 @@
 from itertools import product
 import subprocess
+import argparse
 
 def uptriag(matrix):
     '''
@@ -203,49 +204,46 @@ def linear_transformations(FF, matrix_list, partition, guessed):
         after_TS = [sum(T[h, k] * after_S[k] for k in range(m)) for h in range(m)]
     return [T, S.transpose(), after_TS]
 
-# char = 2
-# exp = 4
-# FF.<w> = GF(2^4)
 
-# B = [4,2,1]
-# k1 = 1
-# k2 = 2
-# k = [k1, k2]
-# n = 26
-# m = sum(B) + sum(k) 
-# q = 2^4
 
-# assert sum(B)+sum(k) == m, f'Error: the partition does not sum to {m}'
+########################################################################################################################################################################################
 
-# eqs = [uptriag(random_matrix(FF, n)) for i in range(m)]
-# targets = [FF.random_element() for i in range(m)]
-
-# print(f'Parameters:')
-# print(f'q = {q}')
-# print(f'n = {n}')
-# print(f'm = {m}')
-
-# eqs_transformed = linear_transformations(FF, eqs, B, k)[2]
-# print('Success!')
-
-# print(f'{k[0]} unused Matrices')
-# for j in range(k[0]):
-#     print(eqs_transformed[j])
-#     print('--------------------------------------------------------------------------------------')
-# print('--------------------------------------------------------------------------------------')
-# print(f'First Block of size {B[0]}')
-# for j in range(k[0], k[0]+B[0]):
-#     print(eqs_transformed[j])
-#     print('--------------------------------------------------------------------------------------')
-# print('--------------------------------------------------------------------------------------')
-# print(f'{k[1]} to linearize')
-# for j in range(k[0]+B[0], k[0]+B[0]+k[1]):
-#     print(eqs_transformed[j])
-#     print('--------------------------------------------------------------------------------------')
-# print('--------------------------------------------------------------------------------------')
-# for i in range(1, len(B)):
-#     print(f'{i+1}-th Block of size {B[i]}')
-#     for j in range(sum(k)+sum(B[:i]), sum(k)+sum(B[:i+1])):
-#         print(eqs_transformed[j])
-#         print('--------------------------------------------------------------------------------------')
-#     print('--------------------------------------------------------------------------------------')
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Tranformation Algorithm")
+    parser.add_argument("-n", type=int, help="Number of variables")
+    parser.add_argument("-m", type=int, help="Number of equations")
+    parser.add_argument("-q", type=int, help="Field Size")
+    parser.add_argument("-partition", nargs='+', type=int, help="Partition")
+    parser.add_argument("-guessed", nargs='+', type=int, help="Guessed")    
+    arg = parser.parse_args()
+    assert sum(arg.partition)+sum(arg.guessed) == arg.m, f'Error: the partition does not sum to {arg.m}'
+    FF.<w> = GF(arg.q)
+    eqs = [uptriag(random_matrix(FF, arg.n)) for i in range(arg.m)]
+    print(f'Parameters:')
+    print(f'q = {arg.q}')
+    print(f'n = {arg.n}')
+    print(f'm = {arg.m}')
+    eqs_transformed = linear_transformations(FF, eqs, arg.partition, arg.guessed)[2]
+    print('Success! S and T have successfully been found. ')
+    print('Printing the final form of the matrices...')
+    print(f'{arg.guessed[0]} unused Matrices')
+    for j in range(arg.guessed[0]):
+        print(eqs_transformed[j])
+        print('--------------------------------------------------------------------------------------')
+    print('--------------------------------------------------------------------------------------')
+    print(f'First Block of size {arg.partition[0]}')
+    for j in range(arg.guessed[0], arg.guessed[0]+arg.partition[0]):
+        print(eqs_transformed[j])
+        print('--------------------------------------------------------------------------------------')
+    print('--------------------------------------------------------------------------------------')
+    print(f'{arg.guessed[1]} to linearize')
+    for j in range(arg.guessed[0]+arg.partition[0], arg.guessed[0]+arg.partition[0]+arg.guessed[1]):
+        print(eqs_transformed[j])
+        print('--------------------------------------------------------------------------------------')
+    print('--------------------------------------------------------------------------------------')
+    for i in range(1, len(arg.partition)):
+        print(f'{i+1}-th Block of size {arg.partition[i]}')
+        for j in range(sum(arg.guessed)+sum(arg.partition[:i]), sum(arg.guessed)+sum(arg.partition[:i+1])):
+            print(eqs_transformed[j])
+            print('--------------------------------------------------------------------------------------')
+        print('--------------------------------------------------------------------------------------')
