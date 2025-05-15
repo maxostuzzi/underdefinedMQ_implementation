@@ -1,2 +1,41 @@
-# underdefinedMQ
-This is the implementation of the algorithms described in the paper ........
+# underdetermined_MQ
+This is the implementation of the algorithms described in the paper Just Guess: Improved Algorithm for the Underdetermined MQ Problem.
+
+
+***
+
+## Optimization Algorithm
+
+Our optimization algorithm `optimization_classical_and_quantum.py` takes as input the following parameters:
+- `n` number of variables;
+- `m` number of equations;
+- `q` the characteristic of the field $\mathbb{F}_q$;
+- `p` the partition size as described in the paper;
+- `c` number of cpus for running in parallel;
+
+The algorithm generates all possible partition of the input `m`, filters them according to the constraints described in Section 3 and 4 of the paper, evaluates the corresponding bit complexity and ouputs a list of partitions sorted starting from the most efficient one. The results are displayed on the terminal window, as shown below.
+
+![](https://anonymous.4open.science/r/underdefinedMQ_implementation-6A0E/example_output_optimization.png)
+
+### Prerequisites
+
+Our algorithm `optimization_classical_and_quantum.py` runs with **Python 3.13.2**. For our algorithm the libraries `tqdm` and `cryptographic_estimators` are additionally required. These can be installed for example using pip via the following two commands:
+- `pip install tqdm`
+- `pip install cryptographic_estimators`. 
+
+For a more detailed description of the libraries and customized installations please follow the corresponding references:
+- `tqdm` documentation [TQDM](https://tqdm.github.io/)
+- `cryptographic_estimators` documentation [Crypto-TII](https://github.com/Crypto-TII/CryptographicEstimators)
+
+An **example** is provided below:
+
+- `python .\optimization_classical_and_quantum.py -n 1680 -m 190 -q 7 -p 8 -c 14`
+
+### Optional Parameters
+
+The algorithm can take as input the following optional parameters:
+- `t` threshold that filters out partitions for which the exhaustive search bit complexity superseeds $t$;
+- `maxsummand` i.e $b_{2},...,b_{p} \leq \text{maxsummand}$
+- `maxb1` i.e $b_1 \leq \text{maxb1}$
+- `minsumguess` $k \gt \text{minsumguess}$
+- `lines` number of results in output file
