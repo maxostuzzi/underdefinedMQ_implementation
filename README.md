@@ -4,14 +4,35 @@ This is the implementation of the algorithms described in the paper Just Guess: 
 
 ***
 
+## Transformation Algorithm and Filter Algorithm
+
+Our algorithm `transformation.sage` takes as input:
+- `n` number of variables;
+- `m` number of equations;
+- `q` the characteristic of the field $\mathbb{F}_q$;
+- `guessed` a partition of $k$ as described in the paper;
+- `partition` a proper partition of $m-k$. 
+
+Note that the `guessed` and the `partition` must satisfy the constraints in the paper.
+To check whether a `guessed` and `partition` are valid, one can use the filtering algorithm `full_filter_test.py`, see the dedicated description above.
+
+`transformation.sage` then generates a random MQ map with $P:\mathbb{F}^n_q\rightarrow\mathbb{F}^m_q$ described by a list of matrices and then computes the change of variables $S:\mathbb{F}^n_q\rightarrow\mathbb{F}^n_q$ and the system transformation $T:\mathbb{F}^m_q\rightarrow\mathbb{F}^m_q$ as described in Section 3 of the paper.
+It will print all the matrices of the new MQ map $\tilde P = T\circ P\circ S$.
+
+An example:
+
+- `python ./transformation.sage -n 100 -m 14 -q 16 -partiton 4 4 4 -guessed 1 1`
+  
+***
+
 ## Optimization Algorithm
 
 Our optimization algorithm `optimization_classical_and_quantum.py` takes as input the following parameters:
 - `n` number of variables;
 - `m` number of equations;
 - `q` the characteristic of the field $\mathbb{F}_q$;
-- `p` the partition size as described in the paper;
-- `c` number of cpus for running in parallel;
+- `p` a partition number;
+- `c` number of cpus for running in parallel.
 
 The algorithm generates all possible partition of the input `m`, filters them according to the constraints described in Section 3 and 4 of the paper, evaluates the corresponding bit complexity and ouputs a list of partitions sorted starting from the most efficient one. The results are displayed on the terminal window, as shown below.
 
