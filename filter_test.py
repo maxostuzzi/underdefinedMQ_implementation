@@ -72,8 +72,8 @@ if __name__ == "__main__":
 	parser.add_argument("-n", type=int, help="Number of variables")
 	parser.add_argument("-m", type=int, help="Number of equations")
 	parser.add_argument("-partition", nargs='+', type=int, help="Partition")
-	parser.add_argument("-k", nargs='+', type=int, help="Guessed")
+	parser.add_argument("-guessed", nargs='+', type=int, help="Guessed")
 	parser.add_argument("-t", type=int, default=999, help="Defines a treshold to reduce the number of combinations")
 	
 	args = parser.parse_args()
-	filter_test(args.n, args.m, args.partition + args.k, args.t)
+	filter_test(args.n, args.m, args.partition + args.guessed, args.t)
