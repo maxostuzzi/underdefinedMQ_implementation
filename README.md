@@ -1,10 +1,21 @@
-# underdetermined_MQ
+# Just Guess!
 This is the implementation of the algorithms described in the paper Just Guess: Improved Algorithm for the Underdetermined MQ Problem.
-
 
 ***
 
-## Transformation Algorithm and Filter Algorithm
+## Filtering Algorithm
+
+Our filtering algorithm `filter_test.py` takes as input:
+- `n` number of variables;
+- `m` number of equations;
+- `guessed` a partition of $k$ as described in the paper;
+- `partition` a proper partition of $m-k$.
+
+It will check whether `guessed` and `partition` satisfy the constraints from the paper and it will print a detailed overview of what steps can be done and what steps cannot.
+
+***
+
+## Transformation Algorithm
 
 Our algorithm `transformation.sage` takes as input:
 - `n` number of variables;
