@@ -1,0 +1,16 @@
+n = 464
+m = 80
+q = 16
+ρ = 0.14
+format = ((b1, b2, b3, b4, b5, b6, k1, k2), [mq estimator results], bit complexity quantum, memory, bit complexity classical)
+
+((16, 3, 3, 3, 3, 3, 36, 13), [('ExhaustiveSearch', 13.66444870745389, 10.870364719583405), ('HybridF5', 13.584962500721156, 6.754887502163468), ('HybridF5', 13.584962500721156, 6.754887502163468), ('HybridF5', 13.584962500721156, 6.754887502163468), ('HybridF5', 13.584962500721156, 6.754887502163468), ('HybridF5', 13.584962500721156, 6.754887502163468)], 111.7, 10.9, 209.7)
+((16, 4, 4, 4, 4, 1, 36, 11), [('Crossbred', 17.288959254702245, 10.027905996569885), ('ExhaustiveSearch', 18.0, 8.0), ('ExhaustiveSearch', 18.0, 8.0), ('ExhaustiveSearch', 18.0, 8.0), ('ExhaustiveSearch', 18.0, 8.0), ('Undefined', 0, 0)], 112.0, 8.0, 206.0)
+((16, 4, 4, 4, 1, 4, 36, 11), [('Crossbred', 17.288959254702245, 10.027905996569885), ('ExhaustiveSearch', 18.0, 8.0), ('ExhaustiveSearch', 18.0, 8.0), ('ExhaustiveSearch', 18.0, 8.0), ('Undefined', 0, 0), ('ExhaustiveSearch', 18.0, 8.0)], 112.0, 8.0, 206.0)
+((16, 4, 4, 1, 4, 4, 36, 11), [('Crossbred', 17.288959254702245, 10.027905996569885), ('ExhaustiveSearch', 18.0, 8.0), ('ExhaustiveSearch', 18.0, 8.0), ('Undefined', 0, 0), ('ExhaustiveSearch', 18.0, 8.0), ('ExhaustiveSearch', 18.0, 8.0)], 112.0, 8.0, 206.0)
+((16, 4, 1, 4, 4, 4, 36, 11), [('Crossbred', 17.288959254702245, 10.027905996569885), ('ExhaustiveSearch', 18.0, 8.0), ('Undefined', 0, 0), ('ExhaustiveSearch', 18.0, 8.0), ('ExhaustiveSearch', 18.0, 8.0), ('ExhaustiveSearch', 18.0, 8.0)], 112.0, 8.0, 206.0)
+((16, 1, 4, 4, 4, 4, 36, 11), [('Crossbred', 17.288959254702245, 10.027905996569885), ('Undefined', 0, 0), ('ExhaustiveSearch', 18.0, 8.0), ('ExhaustiveSearch', 18.0, 8.0), ('ExhaustiveSearch', 18.0, 8.0), ('ExhaustiveSearch', 18.0, 8.0)], 112.0, 8.0, 206.0)
+((17, 4, 4, 4, 3, 1, 36, 11), [('Crossbred', 18.115820159477103, 10.936637939002571), ('ExhaustiveSearch', 18.0, 8.0), ('ExhaustiveSearch', 18.0, 8.0), ('ExhaustiveSearch', 18.0, 8.0), ('HybridF5', 13.584962500721156, 6.754887502163468), ('Undefined', 0, 0)], 112.1, 10.9, 206.1)
+((17, 4, 4, 4, 2, 2, 36, 11), [('Crossbred', 18.115820159477103, 10.936637939002571), ('ExhaustiveSearch', 18.0, 8.0), ('ExhaustiveSearch', 18.0, 8.0), ('ExhaustiveSearch', 18.0, 8.0), ('Undefined', 0, 0), ('Undefined', 0, 0)], 112.1, 10.9, 206.1)
+((17, 4, 4, 4, 1, 3, 36, 11), [('Crossbred', 18.115820159477103, 10.936637939002571), ('ExhaustiveSearch', 18.0, 8.0), ('ExhaustiveSearch', 18.0, 8.0), ('ExhaustiveSearch', 18.0, 8.0), ('Undefined', 0, 0), ('HybridF5', 13.584962500721156, 6.754887502163468)], 112.1, 10.9, 206.1)
+((17, 4, 4, 3, 4, 1, 36, 11), [('Crossbred', 18.115820159477103, 10.936637939002571), ('ExhaustiveSearch', 18.0, 8.0), ('ExhaustiveSearch', 18.0, 8.0), ('HybridF5', 13.584962500721156, 6.754887502163468), ('ExhaustiveSearch', 18.0, 8.0), ('Undefined', 0, 0)], 112.1, 10.9, 206.1)

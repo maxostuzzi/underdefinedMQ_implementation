@@ -1,0 +1,16 @@
+n = 464
+m = 80
+q = 16
+ρ = 0.14
+format = ((b1, b2, b3, b4, b5, b6, k1, k2), [mq estimator results], bit complexity classical, memory, bit complexity quantum)
+
+((1, 1, 1, 1, 1, 73, 1, 1), [('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('BooleanSolveFXL', 185.81456430380567, 57.72003407905707)], 193.8, 57.7, 189.8)
+((1, 1, 1, 1, 1, 72, 2, 1), [('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('BooleanSolveFXL', 183.70298602942822, 62.61654494037865)], 195.7, 62.6, 189.7)
+((1, 1, 1, 1, 1, 72, 1, 2), [('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('BooleanSolveFXL', 183.70298602942822, 62.61654494037865)], 195.7, 62.6, 189.7)
+((1, 1, 1, 1, 1, 71, 3, 1), [('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('BooleanSolveFXL', 181.0239793125881, 57.34919638368876)], 197.0, 57.3, 189.0)
+((1, 1, 1, 1, 1, 71, 2, 2), [('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('BooleanSolveFXL', 181.0239793125881, 57.34919638368876)], 197.0, 57.3, 189.0)
+((1, 1, 1, 1, 1, 71, 1, 3), [('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('BooleanSolveFXL', 181.0239793125881, 57.34919638368876)], 197.0, 57.3, 189.0)
+((1, 1, 1, 1, 1, 70, 4, 1), [('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('BooleanSolveFXL', 179.24060990736385, 54.50770123521017)], 199.2, 54.5, 189.2)
+((1, 1, 1, 1, 1, 70, 3, 2), [('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('BooleanSolveFXL', 179.24060990736385, 54.50770123521017)], 199.2, 54.5, 189.2)
+((1, 1, 1, 1, 1, 70, 2, 3), [('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('BooleanSolveFXL', 179.24060990736385, 54.50770123521017)], 199.2, 54.5, 189.2)
+((1, 1, 1, 1, 1, 70, 1, 4), [('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('Undefined', 0, 0), ('BooleanSolveFXL', 179.24060990736385, 54.50770123521017)], 199.2, 54.5, 189.2)
