@@ -51,7 +51,7 @@ Our optimization algorithm `optimization_classical_and_quantum.py` takes as inpu
 
 The algorithm generates all possible partition of the input `m`, filters them according to the constraints described in Section 3 and 4 of the paper, evaluates the corresponding bit complexity and ouputs a list of partitions sorted starting from the most efficient one. The results are displayed on the terminal window, as shown below.
 
-![](https://anonymous.4open.science/r/underdefinedMQ_implementation-6A0E/example_output_optimization.png)
+![](example_output_optimization.png)
 
 ### Prerequisites
 
