@@ -78,7 +78,7 @@ Our optimization algorithm `optimization_classical_and_quantum.py` takes as inpu
 - `p` a partition number;
 - `c` number of cpus for running in parallel.
 
-The algorithm generates all possible partition of the input `m`, filters them according to the constraints described in Section 3 and 4 of the paper, evaluates the corresponding bit complexity and ouputs a list of partitions sorted starting from the most efficient one. The results are displayed on the terminal window, as shown below.
+The algorithm generates all possible partition of the input `m`, filters them according to the constraints described in Section 3 and 4 of the paper, evaluates the corresponding bit complexity (without accounting for the failure probability) and ouputs a list of partitions sorted starting from the most efficient one. The results are displayed on the terminal window, as shown below.
 
 ![](example_output_optimization.png)
 
@@ -104,3 +104,17 @@ The algorithm can take as input the following optional parameters:
 - `maxb1` i.e $b_1 \leq \text{maxb1}$
 - `minsumguess` $k \gt \text{minsumguess}$
 - `lines` number of results in output file
+
+  ***
+
+## Evaluate Partition
+
+Our algorithm `evaluate_partition.py` takes as input the following parameters:
+- `n` number of variables;
+- `m` number of equations;
+- `q` the characteristic of the field $\mathbb{F}_q$;
+- `k` a partition of $k$ as described in the paper;
+- `partition` a proper partition of partition $m-k;
+- `grover` an optional toggle input, which triggers quantum complexity instead of the classical one.
+
+First the algorithm checks whether a partition is valid, in the sense that satisfies the requirements from the paper. If the partition is valid, it computes and outputs the corresponding bitcomplexity, not accounting for failure probabilities.
