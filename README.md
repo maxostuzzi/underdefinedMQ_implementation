@@ -50,7 +50,22 @@ Our algorithm `precise_complexity.py` takes as input the following parameters:
 
 The algorithm computes the precise complexity relative to the input in the case we enter the polynomial regime, as described in the paper. It outputs the success probability $s_p$, the expected number of trivial MQ problem solved $e_p$ (both computed using the recursive formulas) and the precise complexity.
 To run the algorithm from the terminal, run for example
+
 `python precise_complexity.py -q 16 -p 25 -k 15 19 --grover`.
+
+***
+
+## Test Probability and Expectation
+
+This algorithm, called `prob_exp_test.py` takes as input the following parameters:
+- `q` the characteristic of the field $\mathbb{F}_q$;
+- `p` a partition number, which ultimately corresponds to the number of trivial MQ problems;
+- `attempts` the number of experiments we want to conduct,
+and returns the experimental probability $s_p$ and the experimental expectation $e_p$.
+
+To run the algorithm from the terminal, run for example
+
+`python prob_exp_test.py -q 16 -p 25 -attempts 10000`.
 
 ***
 
