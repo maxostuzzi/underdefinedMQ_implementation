@@ -73,7 +73,7 @@ def main():
         description="Compute DFS success probability and complexity metrics."
     )
     parser.add_argument(
-        "-t", type=int, required=True,
+        "-p", type=int, required=True,
         help="Maximum search depth (integer)."
     )
     parser.add_argument(
@@ -90,9 +90,9 @@ def main():
     )
 
     args = parser.parse_args()
-    exp_solves, new_prob, factor = exp_dfs(args.t, args.q)
+    exp_solves, new_prob, factor = exp_dfs(args.p, args.q)
 
-    print(f"Probability of success at depth {args.t}: {new_prob:.6f}")
+    print(f"Probability of success at depth {args.p}: {new_prob:.6f}")
     print(f"Expected number of solves: {exp_solves:.6f}")
 
     if args.k:
