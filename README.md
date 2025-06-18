@@ -40,6 +40,20 @@ An example:
   
 ***
 
+## Precise Complexity Algorithm
+
+Our algorithm `precise_complexity.py` takes as input the following parameters:
+- `q` the characteristic of the field $\mathbb{F}_q$;
+- `p` a partition number, which ultimately corresponds to the number of trivial MQ problems;
+- `k` two integers, which correspond to $k_1$ and $k_2$ in the paper;
+- `grover` an optional toggle input, which triggers quantum complexity instead of the classical one.
+
+The algorithm computes the precise complexity relative to the input in the case we enter the polynomial regime, as described in the paper. It outputs the success probability $s_p$, the expected number of trivial MQ problem solved $e_p$ (both computed using the recursive formulas) and the precise complexity.
+To run the algorithm from the terminal, run for example
+`python precise_complexity.py -q 16 -p 25 -k 15 19 --grover`.
+
+***
+
 ## Optimization Algorithm
 
 Our optimization algorithm `optimization_classical_and_quantum.py` takes as input the following parameters:
