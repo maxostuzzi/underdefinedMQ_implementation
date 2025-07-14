@@ -36,7 +36,7 @@ It will print all the matrices of the new MQ map $\tilde P = T\circ P\circ S$.
 
 An example:
 
-- `python ./transformation.sage -n 100 -m 14 -q 16 -guessed 1 1 -partiton 4 4 4`
+- `./sage ./transformation.sage -n 100 -m 14 -q 16 -guessed 1 1 -partition 4 4 4`
   
 ***
 
