@@ -11,14 +11,14 @@ Our algorithm `transformation.sage` takes as input:
 - `k` number of guessed coordinates;
 - `p` the number of MQ $(1,1)$. 
 
-Note that the `guessed` and the `trivial` must satisfy the constraints in the paper.
+Note that the `k` and the `p` must satisfy the constraints in the paper.
 
 `transformation.sage` then generates a random MQ map with $P:\mathbb{F}^n_q\rightarrow\mathbb{F}^m_q$ described by a list of matrices and then computes the change of variables $S:\mathbb{F}^n_q\rightarrow\mathbb{F}^n_q$ and the system transformation $T:\mathbb{F}^m_q\rightarrow\mathbb{F}^m_q$ as described in Section 3 of the paper.
 It will print all the matrices of the new MQ map $\tilde P = T\circ P\circ S$.
 
 An example:
 
-- `./sage ./transformation.sage -n 100 -m 14 -q 16 -k 10 -p 2`
+- `./sage ./transformation.sage -n 11 -m 6 -q 16 -k 2 -p 2`
   
 ***
 
@@ -53,38 +53,25 @@ To run the algorithm from the terminal, run for example
 
 ## Optimization Algorithm
 
-Our optimization algorithm `optimization_classical_and_quantum.py` takes as input the following parameters:
+Our optimization algorithm `optimizationm.py` takes as input the following parameters:
 - `n` number of variables;
 - `m` number of equations;
 - `q` the characteristic of the field $\mathbb{F}_q$;
-- `p` a partition number;
-- `c` number of cpus for running in parallel.
 
-The algorithm generates all possible partition of the input `m`, filters them according to the constraints described in Section 3 and 4 of the paper, evaluates the corresponding bit complexity (without accounting for the failure probability) and ouputs a list of partitions sorted starting from the most efficient one. The results are displayed on the terminal window, as shown below.
+The algorithm exhaustively searches for the optimal choice of the parameters $(k,p)$. Then, it prints
+- the optimal parameters found excluding polynomial factors;
+- the optimal parameters found including polynomial factors;
+- the probability $s_p$;
+- the number of expected nodes in the MQ tree $e_p$ visited by the DFS;
+- the complexity without polynomial factors;
+- the complexity with polynomial factors;
+both classically and quantumly.
 
 ![](example_output_optimization.png)
 
 ### Prerequisites
 
-Our algorithm `optimization_classical_and_quantum.py` runs with **Python 3.13.2**. For our algorithm the libraries `tqdm` and `cryptographic_estimators` are additionally required. These can be installed for example using pip via the following two commands:
-- `pip install tqdm`
-- `pip install cryptographic_estimators`. 
+For our algorithm the library `njit` is additionally required.
 
-For a more detailed description of the libraries and customized installations please follow the corresponding references:
-- `tqdm` documentation [TQDM](https://tqdm.github.io/)
-- `cryptographic_estimators` documentation [Crypto-TII](https://github.com/Crypto-TII/CryptographicEstimators)
-
-An **example** is provided below:
-
-- `python .\optimization_classical_and_quantum.py -n 1680 -m 190 -q 7 -p 8 -c 14`
-
-### Optional Parameters
-
-The algorithm can take as input the following optional parameters:
-- `t` threshold that filters out partitions for which the exhaustive search bit complexity superseeds $t$;
-- `maxsummand` i.e $b_{2},...,b_{p} \leq \text{maxsummand}$
-- `maxb1` i.e $b_1 \leq \text{maxb1}$
-- `minsumguess` $k \gt \text{minsumguess}$
-- `lines` number of results in output file
-
+- `python .\optimization.py 860 78 16`
   ***
