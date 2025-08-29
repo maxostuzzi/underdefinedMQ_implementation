@@ -9,7 +9,7 @@ Our algorithm `transformation.sage` takes as input:
 - `m` number of equations;
 - `q` the characteristic of the field $\mathbb{F}_q$;
 - `k` number of guessed coordinates;
-- `p` the number of MQ$(1,1)$. 
+- `p` the number of MQ $(1,1)$. 
 
 Note that the `guessed` and the `trivial` must satisfy the constraints in the paper.
 
