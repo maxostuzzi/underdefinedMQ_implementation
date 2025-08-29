@@ -1,22 +1,5 @@
 # Just Guess!
 This is the implementation of the algorithms described in the paper Just Guess: Improved Algorithm for the Underdetermined MQ Problem.
-
-***
-
-## Filtering Algorithm
-
-Our filtering algorithm `filter_test.py` takes as input:
-- `n` number of variables;
-- `m` number of equations;
-- `guessed` a partition of $k$ as described in the paper;
-- `partition` a proper partition of $m-k$.
-
-It will check whether `guessed` and `partition` satisfy the constraints from the paper and it will print a detailed overview of what steps can be done and what steps cannot.
-
-An example:
-
-`python filter_test.py -n 1848 -m 142 -guessed 1 1 -partition 9 1 1 1 1 127`
-
 ***
 
 ## Transformation Algorithm
@@ -25,18 +8,17 @@ Our algorithm `transformation.sage` takes as input:
 - `n` number of variables;
 - `m` number of equations;
 - `q` the characteristic of the field $\mathbb{F}_q$;
-- `guessed` a partition of $k$ as described in the paper;
-- `partition` a proper partition of $m-k$. 
+- `k` number of guessed coordinates;
+- `p` the number of MQ$(1,1)$. 
 
-Note that the `guessed` and the `partition` must satisfy the constraints in the paper.
-To check whether a `guessed` and `partition` are valid, one can use the filtering algorithm `full_filter_test.py`, see the dedicated description above.
+Note that the `guessed` and the `trivial` must satisfy the constraints in the paper.
 
 `transformation.sage` then generates a random MQ map with $P:\mathbb{F}^n_q\rightarrow\mathbb{F}^m_q$ described by a list of matrices and then computes the change of variables $S:\mathbb{F}^n_q\rightarrow\mathbb{F}^n_q$ and the system transformation $T:\mathbb{F}^m_q\rightarrow\mathbb{F}^m_q$ as described in Section 3 of the paper.
 It will print all the matrices of the new MQ map $\tilde P = T\circ P\circ S$.
 
 An example:
 
-- `./sage ./transformation.sage -n 100 -m 14 -q 16 -guessed 1 1 -partition 4 4 4`
+- `./sage ./transformation.sage -n 100 -m 14 -q 16 -k 10 -p 2`
   
 ***
 
@@ -59,7 +41,7 @@ To run the algorithm from the terminal, run for example
 
 This algorithm, called `prob_exp_test.py` takes as input the following parameters:
 - `q` the characteristic of the field $\mathbb{F}_q$;
-- `p` a partition number, which ultimately corresponds to the number of trivial MQ problems;
+- `p` the number of MQ$(1,1)$;
 - `attempts` the number of experiments we want to conduct,
 and returns the experimental probability $s_p$ and the experimental expectation $e_p$.
 
@@ -106,15 +88,3 @@ The algorithm can take as input the following optional parameters:
 - `lines` number of results in output file
 
   ***
-
-## Evaluate Partition
-
-Our algorithm `evaluate_partition.py` takes as input the following parameters:
-- `n` number of variables;
-- `m` number of equations;
-- `q` the characteristic of the field $\mathbb{F}_q$;
-- `k` a partition of $k$ as described in the paper;
-- `partition` a proper partition of partition $m-k;
-- `grover` an optional toggle input, which triggers quantum complexity instead of the classical one.
-
-First the algorithm checks whether a partition is valid, in the sense that satisfies the requirements from the paper. If the partition is valid, it computes and outputs the corresponding bitcomplexity, not accounting for failure probabilities.
