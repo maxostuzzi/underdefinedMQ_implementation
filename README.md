@@ -22,19 +22,25 @@ An example:
   
 ***
 
-## Precise Complexity Algorithm
+## Complexity given $p$ and $k$
 
-Our algorithm `precise_complexity.py` takes as input the following parameters:
+Our algorithm `complexity_withpoly.py` takes as input the following parameters:
+- `n` number of variables;
+- `m` number of equations;
 - `q` the characteristic of the field $\mathbb{F}_q$;
-- `p` a partition number, which ultimately corresponds to the number of trivial MQ problems;
-- `k` two integers, which correspond to $k_1$ and $k_2$ in the paper;
-- `grover` an optional toggle input, which triggers quantum complexity instead of the classical one.
+- `k` the number of guessed variables;
+- `p` the number of MQ $(1,1)$ problems;
+- `polyfactors` an optional switch.
 
-The algorithm computes the precise complexity relative to the input in the case we enter the polynomial regime, as described in the paper. It outputs the success probability $s_p$, the expected number of trivial MQ problem solved $e_p$ (both computed using the recursive formulas) and the precise complexity.
-To run the algorithm from the terminal, run for example
+The algorithm then evaluates the complexity of the Just-Guess-Solver with the corresponding inputs. If `polyfactors` is called, it computes the complexity including the polynomial overhead. Then, it prints
+- the probability $s_p$;
+- the number of expected nodes in the MQ tree $e_p$ visited by the DFS;
+- the complexity;
+both classically and quantumly.
 
-`python precise_complexity.py -q 16 -p 25 -k 15 19 --grover`.
+For our algorithm the library `njit` is additionally required.
 
+- `python .\complexity_withpoly.py -n 860 -m 78 -q 16 -p 25 -k 34 --polyfactors`
 ***
 
 ## Test Probability and Expectation
