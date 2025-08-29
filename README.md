@@ -41,7 +41,7 @@ To run the algorithm from the terminal, run for example
 
 This algorithm, called `prob_exp_test.py` takes as input the following parameters:
 - `q` the characteristic of the field $\mathbb{F}_q$;
-- `p` the number of MQ$(1,1)$;
+- `p` the number of MQ $(1,1)$;
 - `attempts` the number of experiments we want to conduct,
 and returns the experimental probability $s_p$ and the experimental expectation $e_p$.
 
