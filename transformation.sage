@@ -213,37 +213,29 @@ if __name__ == "__main__":
     parser.add_argument("-n", type=int, help="Number of variables")
     parser.add_argument("-m", type=int, help="Number of equations")
     parser.add_argument("-q", type=int, help="Field Size")
-    parser.add_argument("-partition", nargs='+', type=int, help="Partition")
-    parser.add_argument("-guessed", nargs='+', type=int, help="Guessed")    
+    parser.add_argument("-p", type=int, help="p")
+    parser.add_argument("-k", type=int, help="Guessed")    
     arg = parser.parse_args()
-    assert sum(arg.partition)+sum(arg.guessed) == arg.m, f'Error: the partition does not sum to {arg.m}'
     FF.<w> = GF(arg.q)
     eqs = [uptriag(random_matrix(FF, arg.n)) for i in range(arg.m)]
     print(f'Parameters:')
     print(f'q = {arg.q}')
     print(f'n = {arg.n}')
     print(f'm = {arg.m}')
-    eqs_transformed = linear_transformations(FF, eqs, arg.partition, arg.guessed)[2]
+    eqs_transformed = linear_transformations(FF, eqs, [arg.m - arg.k - arg.p] + [1 for _ in range(arg.p)], [2 * arg.k + arg.p - arg.m, arg.m - arg.k - arg.p])[2]
     print('Success! S and T have successfully been found. ')
     print('Printing the final form of the matrices...')
-    print(f'{arg.guessed[0]} unused Matrices')
-    for j in range(arg.guessed[0]):
+    print(f'{arg.k} magenta Matrices')
+    for j in range(arg.k):
         print(eqs_transformed[j])
         print('--------------------------------------------------------------------------------------')
     print('--------------------------------------------------------------------------------------')
-    print(f'First Block of size {arg.partition[0]}')
-    for j in range(arg.guessed[0], arg.guessed[0]+arg.partition[0]):
+    print(f'{arg.m-arg.p - arg.k} blue Matrices')
+    for j in range(arg.k, arg.m - arg.p):
         print(eqs_transformed[j])
         print('--------------------------------------------------------------------------------------')
     print('--------------------------------------------------------------------------------------')
-    print(f'{arg.guessed[1]} to linearize')
-    for j in range(arg.guessed[0]+arg.partition[0], arg.guessed[0]+arg.partition[0]+arg.guessed[1]):
-        print(eqs_transformed[j])
-        print('--------------------------------------------------------------------------------------')
-    print('--------------------------------------------------------------------------------------')
-    for i in range(1, len(arg.partition)):
-        print(f'{i+1}-th Block of size {arg.partition[i]}')
-        for j in range(sum(arg.guessed)+sum(arg.partition[:i]), sum(arg.guessed)+sum(arg.partition[:i+1])):
-            print(eqs_transformed[j])
-            print('--------------------------------------------------------------------------------------')
+    print(f'{arg.p} yellow Matrices')
+    for i in range(arg.m - arg.p, arg.m):
+        print(eqs_transformed[i])
         print('--------------------------------------------------------------------------------------')
