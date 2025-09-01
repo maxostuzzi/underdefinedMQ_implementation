@@ -29,7 +29,7 @@ def _compute_transition_probabilities(q):
 def exp_dfs(t, q):
     """
     Evaluate the depth-first search (DFS) success probability and expected
-    number of solves up to depth t in a q-ary tree.
+    number of solves up to depth t in the MQ tree.
 
     Args:
         t: Maximum search depth (number of levels).
@@ -82,10 +82,8 @@ def prob_power_one_minus(q, k, i, s, precise = False):
     else:
         ln = math.log1p(- s*q**(-k))          # ln(1 - q**{-k})
     exponent = (q ** i) * ln           # q**i * ln(1 - q**{-k})
-    # use expm1 for accuracy: exp(exponent) - 1, then take negative
     inner_minus1 = math.expm1(exponent)
     factor = -inner_minus1
-    # clamp for safety
     if factor < 0.0:
         factor = 0.0
     elif factor > 1.0:
@@ -105,6 +103,9 @@ def cost_assign_var(n):
     return [n,n-1]
 
 def cost_sub_assign(k_assigned, n_lin, check = False):
+    '''
+    Return [# of field multiplication, # of field additions] to assign k variables to n_lin equations. If check = True, this is in the check phase, so no inner product to be performed.
+    '''
     assign_assign = [cost *n_lin for cost in cost_assign_assign(k_assigned)]
     if check:
         assign_var = 0
@@ -113,34 +114,25 @@ def cost_sub_assign(k_assigned, n_lin, check = False):
         assign_var = [cost * n_lin for cost in cost_assign_var(k_assigned)]
         return [assign_assign[0] + assign_var[0], assign_assign[1] + assign_var[1]]
 
-def total_cost(q,m,p,k, polynomial_factors = False, bitops = False, precise = False):
+def total_cost(q,m,p,k, polynomial_factors = False):
     e_p, s_p, _ = exp_dfs(p, q)
     expcost_trivialMQstep = 0
     if polynomial_factors:
-        if bitops:
-            pass
-        else:
-            for i in range(p):
-                expcost_trivialMQstep += sum(cost_sub_assign(k+i,1)) * (exp_dfs(i+1,q)[0] - exp_dfs(i,q)[0])
+        for i in range(p):
+            expcost_trivialMQstep += sum(cost_sub_assign(k+i,1)) * (exp_dfs(i+1,q)[0] - exp_dfs(i,q)[0])
         expcost_trivialMQstep += e_p
         expcost_linsolve = 2/3*(m - k - p)**3
         expcost_trivialMQsteplin = (m - k - p) * sum(cost_sub_assign(k + p, m-k-p))
         cost_check = k * sum(cost_sub_assign(m, 1, check = True))
-        if precise:
-            pass
-        else:
-            P = s_p*q**(-k)
-            exp_checks = 1
+        P = s_p*q**(-k)
+        exp_checks = 1
     else:
         expcost_trivialMQstep = e_p
         cost_check = 0
         expcost_trivialMQsteplin = 0
         expcost_linsolve = 0
-        if precise:
-            pass
-        else:
-            P = s_p*q**(-k)
-            exp_checks = 1
+        P = s_p*q**(-k)
+        exp_checks = 1
     cost = expcost_trivialMQstep + s_p * (expcost_trivialMQsteplin + expcost_linsolve + exp_checks * cost_check)
     # iterations_q = math.sqrt(prob_power_one_minus(q, k, k, s_p)/(P * s_p))
     # iterations_c = iterations_q**2
