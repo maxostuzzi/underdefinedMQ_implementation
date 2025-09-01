@@ -9,21 +9,16 @@ from typing import Optional, Tuple, List
 def feasible_for_pair(n: int, m: int, k: int, p: int) -> bool:
     """
     Check the two inequalities for given n,m,k,p.
-    Inequality A (written to avoid floats): 2*n >= numerator
+    Inequality A: 2*n >= numerator
       numerator = ((m-k)*(m-k+1) - (m-k - (p-1))*(m-k - p))
     Inequality B: for all j in 1..Jmax where Jmax = m-k-(p-1),
       n >= (j-1)*(2*m - 2*k - p - (j-1)) + j
     If Jmax < 1, the second inequality is vacuously true.
     """
     m_k = m - k
-
-    # Numerator of the first inequality's right-hand side times 2 (so we can compare integers)
     # numerator = (m_k*(m_k+1) - (m_k - (p-1))*(m_k - p))
     # numerator_1 = (m_k * (m_k + 1)) - ((m_k - p) * (m_k - p - 1)) + k
     numerator = p * (2*m - 2*k - p - 1)
-    # print(numerator/2 + m) 
-    # print(numerator_1/2)
-    # print('######################')
     if 2 * (n-m) < numerator:
         return False
 
@@ -53,7 +48,6 @@ def find_best_k_p(n: int, m: int, q: int, allow_p_zero: bool = True,polyfact = F
     for k in range(0, m + 1):
         for p in range(p_start, m - k + 1):
             if feasible_for_pair(n, m, k, p):
-                # compute q^k (use pow to avoid float rounding; may be negative if q negative and k odd)
                 cost = complexity_withpoly.total_cost(q, m, p, k, polynomial_factors = polyfact)
                 # cost = [k * math.log2(q), (k/2) * math.log2(q)]
                 candidate_c = (cost[0], k, p)
