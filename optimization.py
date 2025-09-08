@@ -38,7 +38,7 @@ def feasible_for_pair(n: int, m: int, k: int, p: int) -> bool:
             term = (j - 1) * (2 * m - 2 * k - p - (j - 1)) + j-1
             if term > max_rhs:
                 max_rhs = term
-        if n < max_rhs:
+        if n - 1 < max_rhs:
             return False
 
     return True
