@@ -81,3 +81,17 @@ For our algorithm the library `njit` is additionally required.
 
 - `python .\optimization.py 860 78 16`
   ***
+
+## Just-Guess-Solver
+
+Our algorithm `just_guess.sage` takes as input:
+- `n` number of variables;
+- `m` number of equations;
+- `k` number of guessed coordinates;
+- `p` the number of MQ $(1,1)$. 
+
+The solver will try to solve the MQ problem with $n$ equations, $m$ equations over $\mathbb{F}_{7}$. If a solution is found, it outputs the solution and checks that $P(y) = t$.
+
+An example:
+
+- `./sage ./just_guess.sage 50 10 3 6`
