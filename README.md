@@ -84,14 +84,15 @@ For our algorithm the library `njit` is additionally required.
 
 ## Just-Guess-Solver
 
-Our algorithm `just_guess.sage` takes as input:
+Our algorithm `just_guess_solver.sage` takes as input:
 - `n` number of variables;
 - `m` number of equations;
+- `q` the size of the field $\mathbb{F}_q$;
 - `k` number of guessed coordinates;
 - `p` the number of MQ $(1,1)$. 
 
-The solver will try to solve the MQ problem with $n$ equations, $m$ equations over $\mathbb{F}_{7}$. If a solution is found, it outputs the solution and checks that $P(y) = t$.
+The solver will to solve a random instance of the MQ problem with $n$ equations, $m$ equations over $\mathbb{F}_{q}$. If no solution is found, the solver solves a re-randomized instance. Eventually, it outputs the solution and checks that $P(y) = t$, together with the number of re-randomization needed.
 
 An example:
 
-- `./sage ./just_guess.sage 50 10 3 6`
+- `./sage ./just_guess_solver.sage 50 10 2 3 6`
