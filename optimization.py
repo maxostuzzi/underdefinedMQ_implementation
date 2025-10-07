@@ -26,6 +26,8 @@ def feasible_for_pair(n: int, m: int, k: int, p: int) -> bool:
     # print('######################')
     # print(numerator)
     # print(2*(n-m))
+    if 2 * k + p - m < 0 or m - k - p < 0:
+        return False
     if 2 * (n-m) < numerator:
         return False
 
