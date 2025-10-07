@@ -146,7 +146,7 @@ def _solve_linear_system_all_solutions(A, b):
         pass
     # produce all combinations in cartesian product
     for coeffs in product(FF, repeat=d):
-        vec = x_part.copy()
+        vec = vector(FF, list(x_part))
         for c, bv in zip(coeffs, basis):
             vec += c * bv
         sols.append(vec)
@@ -353,13 +353,16 @@ def just_guess_solver(FF, P_list, t_vec, k, p, transform):
             for solv in sols:
                 # build full m-vector u
                 u = [None] * m
-                # free vars
+                # free vars (sanity check)
                 for i, idx in enumerate(free_vars):
+                    if not (0 <= idx < m):
+                        raise ValueError(f"free_vars contains invalid index {idx} (m={m})")
                     u[idx] = solv[i]
-                # assigned vars from cand_assigned
+                # assigned vars from cand_assigned (only indices < m)
                 for idx, val in cand_assigned.items():
-                    u[idx] = val
-                # for any remaining unset (shouldn't happen) set to zero
+                    if 0 <= idx < m:
+                        u[idx] = val
+                # fill remaining with zero
                 for idx in range(m):
                     if u[idx] is None:
                         u[idx] = FF(0)
