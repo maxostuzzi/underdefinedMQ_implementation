@@ -108,5 +108,7 @@ The second script allows to etimate the quantum complexity of Hashimoto's algori
 Example usage:
 
 `>>> from cryptographic_estimators.MQEstimator.MQAlgorithms.hashimoto_quantum import Hashimoto`
+
 `>>> from cryptographic_estimators.MQEstimator.mq_problem import MQProblem`
+
 `>>> E = Hashimoto(MQProblem(q = 16, m = 78, n = 860)).time_complexity()`
