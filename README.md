@@ -96,3 +96,17 @@ The solver will to solve a random instance of the MQ problem with $n$ equations,
 An example:
 
 - `./sage ./just_guess_solver.sage 50 10 2 3 6`
+
+## Hashimoto and Hashimoto Quantum
+
+The scripts `hashimoto.py` and `hashimoto_quantum.py` have to be substituted to the script `hashimoto.py` in the MQ estimator https://github.com/Crypto-TII/CryptographicEstimators. Precisely, the path is `cryptographic_estimators/MQEstimator/MQAlgorithms`.
+
+Our first script adds the second constraint needed to carry out Hashimoto's transformation, which is missing in the original script. 
+
+The second script allows to etimate the quantum complexity of Hashimoto's algorithm.
+
+Example usage:
+
+`>>> from cryptographic_estimators.MQEstimator.MQAlgorithms.hashimoto_quantum import Hashimoto`
+`>>> from cryptographic_estimators.MQEstimator.mq_problem import MQProblem`
+`>>> E = Hashimoto(MQProblem(q = 16, m = 78, n = 860)).time_complexity()`
