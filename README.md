@@ -13,18 +13,18 @@ Our algorithm `just_guess_transformation.sage` takes as input:
 
 Note that the `k` and the `p` must satisfy the constraints in the paper.
 
-`transformation.sage` then generates a random MQ map with $P:\mathbb{F}^n_q\rightarrow\mathbb{F}^m_q$ described by a list of matrices and then computes the change of variables $S:\mathbb{F}^n_q\rightarrow\mathbb{F}^n_q$ and the system transformation $T:\mathbb{F}^m_q\rightarrow\mathbb{F}^m_q$ as described in Section 3 of the paper.
+`just_guess_transformation.sage` then generates a random MQ map with $P:\mathbb{F}^n_q\rightarrow\mathbb{F}^m_q$ described by a list of matrices and then computes the change of variables $S:\mathbb{F}^n_q\rightarrow\mathbb{F}^n_q$ and the system transformation $T:\mathbb{F}^m_q\rightarrow\mathbb{F}^m_q$ as described in Section 3 of the paper.
 It will print all the matrices of the new MQ map $\tilde P = T\circ P\circ S$.
 
 An example:
 
-- `./sage ./transformation.sage -n 11 -m 6 -q 16 -k 2 -p 2`
+- `./sage ./just_guess_transformation.sage -n 11 -m 6 -q 16 -k 2 -p 2`
   
 ***
 
 ## Complexity given $p$ and $k$
 
-Our algorithm `complexity_withpoly.py` takes as input the following parameters:
+Our algorithm `compute_complexity.py` takes as input the following parameters:
 - `n` number of variables;
 - `m` number of equations;
 - `q` the characteristic of the field $\mathbb{F}_q$;
@@ -40,7 +40,7 @@ both classically and quantumly.
 
 For our algorithm the library `njit` is additionally required.
 
-- `python .\complexity_withpoly.py -n 860 -m 78 -q 16 -p 25 -k 34 --polyfactors`
+- `python .\compute_complexity.py -n 860 -m 78 -q 16 -p 25 -k 34 --polyfactors`
 ***
 
 ## Test Probability and Expectation
@@ -59,7 +59,7 @@ To run the algorithm from the terminal, run for example
 
 ## Optimization Algorithm
 
-Our optimization algorithm `optimizationm.py` takes as input the following parameters:
+Our optimization algorithm `optimization_simple.py` takes as input the following parameters:
 - `n` number of variables;
 - `m` number of equations;
 - `q` the characteristic of the field $\mathbb{F}_q$;
@@ -79,12 +79,12 @@ both classically and quantumly.
 
 For our algorithm the library `njit` is additionally required.
 
-- `python .\optimization.py 860 78 16`
+- `python .\optimization_simple.py 860 78 16`
   ***
 
 ## Just-Guess-Solver
 
-Our algorithm `just_guess_solver.sage` takes as input:
+Our algorithm `just_guess_randomised.sage` takes as input:
 - `n` number of variables;
 - `m` number of equations;
 - `q` the size of the field $\mathbb{F}_q$;
@@ -95,7 +95,7 @@ The solver will to solve a random instance of the MQ problem with $n$ equations,
 
 An example:
 
-- `./sage ./just_guess_solver.sage 50 10 2 3 6`
+- `./sage ./just_guess_randomised.sage 50 10 2 3 6`
 
 ## Hashimoto and Hashimoto Quantum
 
