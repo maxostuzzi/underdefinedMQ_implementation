@@ -4,7 +4,7 @@ This is the implementation of the algorithms described in the paper Just Guess: 
 
 ## Transformation Algorithm
 
-Our algorithm `transformation.sage` takes as input:
+Our algorithm `just_guess_transformation.sage` takes as input:
 - `n` number of variables;
 - `m` number of equations;
 - `q` the characteristic of the field $\mathbb{F}_q$;
