@@ -479,7 +479,7 @@ def main(argv=None):
         print(f't    = {target}')
         print(f'Number of attempts: {attempts}')
         average_rerand += rerandomisations/attempts
-    print(average_rerand/iterations.n())
+    # print(average_rerand/iterations.n())
 
 
 if __name__ == '__main__':
